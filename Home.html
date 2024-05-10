@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Gabriel Sorica</title>
+		<link rel = "stylesheet" href="main.css"/>
+		
+	</head>
+	
+	<body>
+		<div id = "header">
+			<H2>A bit about me: </h2>
+			<p>I am Gabriel Sorica, an aspiring Software Developer. I enjoy a multitude of tasks within software development, although my favourite would have to be Game Development or simmilar projects, where I am able to see how each and every line of code changes the end result and allows me to see how each mistake or error can affect the end result in real time. While it might be a questionable quality, I enjoy failing repeatedly to learn from said failuires.</p>
+			<p style="padding-top: 10;">As you can see below, I have experience in working with a few programming languages, such as:
+			<ul>
+				<li><a href="#python">Python</a></li>
+				<li><a href="#java"> Java</a></li>
+				<li><a>HTML, CSS and JavaScript</a></li>
+			
+			</ul></p>
+		</div>
+		<div id= "pythonC">
+			<h2><a id= "python">Python</a></h2>
+			<div id = "show">
+			
+			</div>
+			<div id= "code">
+				
+			</div>
+		</div>
+		<div id= "javaC">
+			<h2><a id= "java">Java</a></h2>
+			<p>The most recent Java Project I worked on was making the base for a 3D Game using only base java and the base java packets, without the use of any external libraries like OpenGL.</p>
+				<div id = "show">
+					<button onClick="show('vids')">Show Video</button>
+						<div class = "cVideo" id="vids" style="display:none;">
+							<button class = "collapsible"onClick= "show('v1')" >Video Demo: Base</button>
+						
+								<div id="v1" style="display:none;">
+									<p>First itteration of the Base Java 3D game I am working on.</p>
+									<p>I used base java modules to create a 3D view utilising mathematical operations, such as binary operations, cosine and sine. I made the map into a grid to later be able to add textures.</p>
+									<video width ="80%" controls>
+										<source src="vid/p1.mp4" type = "video/mp4" />
+										Your browser does not support video tags
+									</video>
+								</div>
+							<button class = "collapsible"onClick= "show('v2')" >Video Demo: Render dist + move</button>
+								<div id = "v2" style="display:none;">
+									<p>This edition has the addition of movement and rotation, without including mouse input yet.</p>
+									
+									<video width ="80%" controls>
+									<source src="vid/p2.mp4" type = "video/mp4" />
+									Your browser does not support video tags
+									</video>
+								</div>
+							<button class = "collapsible"onClick= "show('v3')" >Video Demo: Render dist + move</button>
+								<div id = "v3" style="display:none;">
+									<p>This update to the code has the addition of textures as well as jumping and crouching mechanics. This is not gravity <b>yet</b> ,as the code at the momenty just uses the sine math operator to simulate jumping.</p>
+									<video width ="80%" controls>
+									<source src="vid/p3.mp4" type = "video/mp4" />
+									Your browser does not support video tags
+									</video>
+								</div>
+							<button class = "collapsible"onClick= "show('v4')" >Video Demo:Textures and Movement</button>
+								<div id = "v4" style="display:none;">
+									<video width ="80%" controls>
+									<source src="vid/p3.mp4" type = "video/mp4" />
+									Your browser does not support video tags
+									</video>
+								</div>
+						</div>
+			</div>
+			<button onClick="show('code')" >Show Code</button>
+				<div id = "code" style="display = none;">
+					<h2>Code:</h2>
+					<p>Hello</p>
+						
+				</div>
+		</div>
+		
+		<div id="WebC">
+			<h2><a id= "web">Web Development Trifecta</a></h2>
+			<div id = "show">
+			
+			</div>
+			<div id= "code">
+				
+			</div>
+		
+		</div>
+		
+	</body>
+	
+	
+	<script>
+	
+	function show(id){
+	var x = document.getElementById(id);
+	if(x.style.display == "none"){
+	x.style.display = "block";
+	console.log("Show"+id);
+	}
+	
+	else{x.style.display = "none";console.log("hide"+id);}
+	}
+	
+	</script>
+
+</html>
