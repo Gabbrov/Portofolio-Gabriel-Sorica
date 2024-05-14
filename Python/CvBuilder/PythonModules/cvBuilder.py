@@ -11,8 +11,8 @@ from reportlab.pdfbase.ttfonts import TTFont
 from reportlab import *
 
 
-key = "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"
-
+keyTxt = open("../key.txt","r")
+key = keyTxt.readlines()
 
 pdfmetrics.registerFont(TTFont('Vera', 'Vera.ttf'))
 
@@ -53,7 +53,7 @@ def analyse_skills(text):
 def compose(text,part,Keys):
     match part:
         case part.Personal:
-            prompt_text = "Select key points from the personal description that would fit: "+Keys+". From text and then make it into a personal desciption:"+text
+            prompt_text = "Select key points from the personal description that would fit yje key points: "+Keys+". From text and make it into a personal desciption:"+text
 
         case part.Skills:
             prompt_text = "Select the best skills to showcase from: "+text+", compared to key words : "+Keys
