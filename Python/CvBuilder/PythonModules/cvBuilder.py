@@ -1,5 +1,4 @@
 import openai
-import PyPDF2
 import os
 
 from enum import Enum
@@ -7,8 +6,6 @@ from enum import Enum
 from reportlab.pdfgen.canvas import Canvas
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
-
-from reportlab import *
 
 
 keyTxt = open("../key.txt","r")
@@ -66,14 +63,6 @@ def compose(text,part,Keys):
 
 
     return(aiGen(prompt_text))
-#takes a list to iterate trough, summarize and thn combine in one file
-def combine(Iter = []):
-    tempList=[]
-    for i in Iter:
-        tempList.append(aiGen("extract key points"+i))
-    
-    return(aiGen("Combine unique parts of each text, ensuring to keep key points and to make sure there are no repetitions: "+str(tempList)))
-        
 
 def rephrase(text):
     prompt="Rewrite in 3rd person as writen about myself, to make more human like, ensuring less use of difficult/rare words while keeping positive and profesional outlook: "+text
@@ -86,3 +75,14 @@ def rephrase(text):
     return(ai_response)
 
 
+
+
+#Temporarely removed: Issue- Uses too many tokens
+#takes a list to iterate trough, summarize and thn combine in one file
+#def combine(Iter = []):
+#    tempList=[]
+#    for i in Iter:
+#        tempList.append(aiGen("extract key points"+i))
+#    
+#    return(aiGen("Combine unique parts of each text, ensuring to keep key points and to make sure there are no repetitions: "+str(tempList)))
+   

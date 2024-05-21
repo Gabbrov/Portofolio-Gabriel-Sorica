@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<!---This code was taken off of https://stackoverflow.com/questions/62029757/nicely-formatted-python-code-in-html-files/62032824--->
+		<link rel="stylesheet" href="codeFormat.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.0.3/highlight.min.js"></script>
+		<script>hljs.initHighlightingOnLoad();</script>
+		
 		<title>Gabriel Sorica</title>
 		<link rel = "stylesheet" href="main.css"/>
 		
@@ -20,11 +25,156 @@
 		</div>
 		<div id= "pythonC">
 			<h2><a id= "python">Python</a></h2>
-			<div id = "show">
+			<p>My Latest Python 3 project is a CV builder, using openAI's GPT 3.5 library to generate human like descriptions for CVs, targeted to customised job descriptions. Currently I am going trough an overall in design, after my discusion with Bournemouth University's Placement advisor. Some changes coming from this discussion include a complete overhaul in design. Some details will remain the same from the original design. </p>
+			<p style="margin-top:1%;">The final product shouuld have multiple modes, from Cover letter write up, to automatic apply using emails and the default CV write up. As it stands there seem to be some quite obvious issues, first one being the gathering of company and employer details, since GPT might provide outdated information. Another apparent issue is GAI detection and the fact that at times it is quite obvious. To counter this I decided to add some extra prompt information to try to steer the AI from using words that would not otherwise be used by the averge person. At the moment this seems to be working fine, however some further testing is required.</p>
 			
-			</div>
-			<div id= "code">
-				
+			<div id = "show">
+				<button class = "collapsible"onClick= "show('code')" >View Demo</button>
+
+				<div id= "code" style="display:none;">
+					<button class = "collapsible"onClick= "show('code1')" >Show CV-Builder Code</button>
+					<div id="code1" style="display:none;">
+					<pre><code class="python">
+import openai
+import os
+
+from enum import Enum
+
+from reportlab.pdfgen.canvas import Canvas
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+
+
+keyTxt = open("../key.txt","r")
+key = keyTxt.readlines()
+
+pdfmetrics.registerFont(TTFont('Vera', 'Vera.ttf'))
+
+
+pdfs=[]
+
+openai.api_key = key
+
+
+class part(Enum):
+    Personal = 1
+    Skills = 2
+    WorkHist = 3
+
+def aiGen(prompt):
+    response = openai.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[{"role":"user","content":prompt}]
+    )
+    ai_response= response.choices[0].message.content
+    return (ai_response)
+    
+
+def analyse_keys(text):
+    print("Analising...")
+    prompt_text = "detect key words to help in looking to hiring candidates for job description: "+text
+    return (aiGen(prompt_text))
+
+def analyse_skills(text):
+    prompt_text = "Detect Skills and hobbies from text and format them in a list format: "+text
+    return (aiGen(prompt_text))
+
+#Takes in Text, passes trough gpt3.5 and returns a composed section for a cv 
+def compose(text,part,Keys):
+    match part:
+        case part.Personal:
+            prompt_text = "Select key points from the personal description that would fit yje key points: "+Keys+". From text and make it into a personal desciption:"+text
+
+        case part.Skills:
+            prompt_text = "Select the best skills to showcase from: "+text+", compared to key words : "+Keys
+
+        case part.WorkHist:
+            prompt_text = "Rewrite jobs description from: "+text+", to match the key words : "+Keys
+            
+        case _:
+            prompt_text = "Rephrase: "+text+"in a simplistic yet formal aproach to match key points: "+Keys
+
+
+    return(aiGen(prompt_text))
+
+def rephrase(text):
+    prompt="Rewrite in 3rd person as writen about myself, to make more human like, ensuring less use of difficult/rare words while keeping positive and profesional outlook: "+text
+    response = openai.chat.completions.create(
+        model="gpt-3.5-turbo",
+        messages=[{"role":"user","content":prompt}]
+    )
+    
+    ai_response = response.choices[0].message.content
+    return(ai_response)
+				</code></pre>
+					</div>
+					
+					<button class = "collapsible"onClick= "show('code2')" >Show PDF Editor Code</button>
+					<div id="code2" style="display:none;">
+					<pre><code class="python">
+	
+import PyPDF2
+import os
+
+from reportlab.pdfgen.canvas import Canvas
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+
+from reportlab import *
+
+
+pdfmetrics.registerFont(TTFont('Vera', 'Vera.ttf'))
+
+
+
+pdfs=[]
+
+
+def find_pdfs(folder_path):#Code originally from GPT3.5
+
+    pdf_files = []
+    
+    for root, dirs, files in os.walk(folder_path):
+        for file in files:
+            if file.endswith('.pdf'):
+                # If it does, add its full path to the list
+                pdf_files.append(file)
+                
+    return pdf_files
+
+
+def read_file(filePath):
+    
+    try:
+        renderer = PyPDF2.PdfReader(""+filePath)
+        return(""+renderer.pages[0].extract_text())
+
+    except:
+        print("Error Reading:  "+filePath)
+
+
+def write_file(fileName,font="Vera",fontSize=12,loc = 0):
+    exeCode=0
+    try:
+        
+        print("Canvasing")
+        canvas = Canvas(""+fileName+".pdf")
+        canvas.setFont(font,fontSize)
+
+
+        
+        canvas.drawString(0,0,)
+        canvas.save()
+        exeCode=200
+    except Exception as e:
+        print(e)
+        exeCode=-1
+    return exeCode
+					</code></pre>
+					</div>
+					
+					
+				</div>
 			</div>
 		</div>
 		<div id= "javaC">
@@ -69,17 +219,19 @@
 								</div>
 						</div>
 			</div>
-			<button onClick="show('code')" >Show Code</button>
+			<!---<button onClick="show('code')" >Show Code</button>
 				<div id = "code" style="display = none;">
 					<h2>Code:</h2>
 					<p>Hello</p>
 						
-				</div>
+				</div>--->
 		</div>
 		
 		<div id="WebC">
 			<h2><a id= "web">Web Development Trifecta</a></h2>
+			<p>Curently a big majority of the code on this website is self made, with help from W3 Schools and Stack Overflow for the code formatting. The purpose of this website is to demostrate my skills in programming as well as to constantly improve further on said skills. At the moment I am not too satisfied with the design of web page(mostly the color scheme). In future iterations of the website I plan on adding some sort of feedback request to further improve on the website. I also plan on adding a few animations in places, since the website feels a bit static at the moment.</p>
 			<div id = "show">
+			
 			
 			</div>
 			<div id= "code">
